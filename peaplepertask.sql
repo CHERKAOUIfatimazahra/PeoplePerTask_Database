@@ -2,14 +2,14 @@
 -- Table d'utilisateur
 CREATE TABLE users (
 	UserID INT NOT NULL auto_increment,
-    UserName VARCHAR(100),
+    UserName unique VARCHAR(100),
     Password VARCHAR(100),
-    EmailAddress VARCHAR(100),
+    EmailAddress unique VARCHAR(100),
     OtherRelevantInformation VARCHAR(100),
     PRIMARY KEY (UserID)
    );
 
--- Insertion des données dans le tableau des utilisateurs   
+-- Insertion des donnees dans le tableau des utilisateurs   
 INSERT INTO users (UserName, Password, EmailAddress, OtherRelevantInformation)
 VALUES 
     ('JohnDoe', 'password123', 'john.doe@example.com', 'Some relevant information'),
@@ -17,7 +17,7 @@ VALUES
     ('BobJohnson', 'bobpass', 'bob.johnson@example.com', 'Additional user details'),
     ('AliceWilliams', 'alicepass', 'alice.williams@example.com', 'More information about Alice');
 
--- Table des Témoignages
+-- Table des Temoignages
  CREATE TABLE Testimonials(
     ID_Temoignage INT PRIMARY KEY auto_increment,
     Comment varchar(100),
@@ -25,7 +25,7 @@ VALUES
     FOREIGN KEY (UserID) REFERENCES users(UserID)
 );
 
--- Insertion des données dans le tableau des témoignages
+-- Insertion des donnees dans le tableau des temoignages
 INSERT INTO Testimonials (Comment, UserID)
 VALUES 
     ('Great service!', 1),
@@ -42,7 +42,7 @@ CREATE TABLE Freelancers (
     FOREIGN KEY (UserID) REFERENCES users(UserID)
 );
 
--- Insertion des données dans le tableau des freelancers
+-- Insertion des donnees dans le tableau des freelancers
 INSERT INTO Freelancers (NameFreelancer, SKILLS, UserID)
 VALUES 
     ('JohnDoe', 'Web Development', 1),
@@ -50,7 +50,7 @@ VALUES
     ('BobJohnson', 'Digital Marketing', 3),
     ('AliceWilliams', 'Writing', 4);
 
--- Table des Catégories
+-- Table des Categories
 CREATE TABLE categories (
     Category_ID INT PRIMARY KEY auto_increment,
     CategoryName VARCHAR(100)
@@ -64,7 +64,7 @@ VALUES
     ('Digital Marketing'),
     ('Writing');
 
--- Table des Sous-Catégories
+-- Table des Sous-Categories
 CREATE TABLE sub_Categories (
     sub_Category_ID INT PRIMARY KEY auto_increment,
     sub_category_Name VARCHAR(100),
@@ -72,7 +72,7 @@ CREATE TABLE sub_Categories (
     FOREIGN KEY (Category_ID) REFERENCES categories(Category_ID)
 );
 
--- Insertion dans la table des sous-catégories
+-- Insertion dans la table des sous-categories
 INSERT INTO sub_Categories (sub_category_Name, Category_ID)
 VALUES 
     ('Frontend Development', 1),
@@ -106,7 +106,7 @@ VALUES
 CREATE TABLE Offres (
     Offre_ID INT PRIMARY KEY auto_increment,
     Amount INT,
-    Deadline INT,
+    Deadline DATE,
     Freelance_ID INT,
     Project_ID INT,
     FOREIGN KEY (Freelance_ID) REFERENCES Freelancers(Freelance_ID),
@@ -116,7 +116,50 @@ CREATE TABLE Offres (
 -- Insertion dans la table des offres
 INSERT INTO Offres (Amount, Deadline, Freelance_ID, Project_ID)
 VALUES 
-    (500, 14, 1, 1),
-    (200, 7, 2, 2),
-    (800, 21, 3, 3),
-    (300, 10, 4, 4);
+    (50, '2020-01-14', 1, 1),
+    (2, '2023-01-07', 2, 2),
+    (80, '2021-12-21', 3, 3),
+    (100, '2023-01-10', 4, 4);
+
+-- select l'utilisateur qui a le nom 'AliceWilliams' avec  Password, EmailAddress et OtherRelevantInformation 
+    -- SELECT * FROM users
+    -- WHERE UserID = 3;  
+
+-- select OtherRelevantInformation qui sont inferieur a 20
+    -- SELECT * FROM users
+    -- where CHAR_LENGTH(OtherRelevantInformation) > 20;
+
+-- update un nom d'utilisateur 
+    -- update users 
+    -- SET UserName = 'FATIMA ZAHRA'
+    -- WHERE UserID = 3;
+
+-- supprime un commentaire d'un utilisatuer 
+    -- DELETE FROM testimonials 
+    -- WHERE ID_Temoignage = 4;
+
+-- ALTER in tabales
+    -- ALTER TABLE categories ADD created_at TIMESTAMP ;
+    -- ALTER TABLE categories ADD updated_at TIMESTAMP ;
+    -- ALTER TABLE categories ADD updated_by VARCHAR(100) ;
+    -- ALTER TABLE categories ADD created_by VARCHAR(100) ;
+
+    -- ALTER TABLE freelancers ADD created_at TIMESTAMP ;
+    -- ALTER TABLE freelancers ADD updated_at TIMESTAMP ;
+    -- ALTER TABLE freelancers ADD updated_by VARCHAR(100) ;
+    -- ALTER TABLE freelancers ADD created_by VARCHAR(100) ;
+
+    -- ALTER TABLE offres ADD created_at TIMESTAMP ;
+    -- ALTER TABLE offres ADD updated_at TIMESTAMP ;
+    -- ALTER TABLE offres ADD updated_by VARCHAR(100) ;
+    -- ALTER TABLE offres ADD created_by VARCHAR(100) ;
+
+    -- ALTER TABLE sub_categories ADD created_at TIMESTAMP ;
+    -- ALTER TABLE sub_categories ADD updated_at TIMESTAMP ;
+    -- ALTER TABLE sub_categories ADD updated_by VARCHAR(100) ;
+    -- ALTER TABLE sub_categories ADD created_by VARCHAR(100) ;
+
+    -- ALTER TABLE testimonials ADD created_at TIMESTAMP ;
+    -- ALTER TABLE testimonials ADD updated_at TIMESTAMP ;
+    -- ALTER TABLE testimonials ADD updated_by VARCHAR(100) ;
+    -- ALTER TABLE testimonials ADD created_by VARCHAR(100) ;
